@@ -31,7 +31,7 @@ class Vector3D {
 class AnimationController {
   private timeline: gsap.core.Timeline
   private time = 0
-  private canvas: HTMLCanvasElement
+
   private ctx: CanvasRenderingContext2D
   private size: number
   private stars: Star[] = []
@@ -44,8 +44,8 @@ class AnimationController {
   private readonly numberOfStars = 5000
   private readonly trailLength = 80
 
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, _dpr: number, size: number) {
-    this.canvas = canvas
+constructor(_canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, _dpr: number, size: number) {
+    
     this.ctx = ctx
     this.size = size
     this.timeline = gsap.timeline({ repeat: -1 })
