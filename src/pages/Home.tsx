@@ -500,102 +500,105 @@ export default function Home() {
       <section
         id="home"
         ref={heroRef}
-        className="relative w-full h-screen flex items-center overflow-hidden"
+        className="relative w-full h-screen flex flex-col md:flex-row overflow-hidden"
       >
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#639922" />
 
-        <div className="flex h-full w-full">
-          {/* Left: text — full width on mobile, half on desktop */}
-          <div className="w-full md:flex-1 px-5 pt-24 pb-10 md:px-16 md:pt-0 md:pb-0 relative z-10 flex flex-col justify-center md:max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-            >
-              <span className="inline-block bg-[#639922]/20 border border-[#639922]/40 text-[#C0DD97] text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-5">
-                Where kids become creators
-              </span>
-            </motion.div>
+        {/* ── TEXT COLUMN ──────────────────────────────────── */}
+        <div className="flex-1 md:flex-1 px-5 pt-16 pb-2 md:px-16 md:pt-0 md:pb-0 relative z-10 flex flex-col justify-center md:max-w-2xl overflow-y-auto md:overflow-visible">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
+            <span className="inline-block bg-[#639922]/20 border border-[#639922]/40 text-[#C0DD97] text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-5">
+              Where kids become creators
+            </span>
+          </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.05] tracking-tight text-white mb-5"
-            >
-              Kids Build{" "}
-              <span className="text-[#639922]">Real</span>{" "}
-              Technology Here.
-            </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-3xl sm:text-5xl md:text-7xl font-black leading-[1.05] tracking-tight text-white mb-3 md:mb-5"
+          >
+            Kids Build{" "}
+            <span className="text-[#639922]">Real</span>{" "}
+            Technology Here.
+          </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-              className="text-base md:text-lg text-white/60 mb-8 leading-relaxed max-w-xl"
-            >
-              Robots. Websites. AI Apps. Not theory — real projects they build
-              themselves, from scratch. Ages 6–18.
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="text-sm md:text-lg text-white/60 mb-4 md:mb-8 leading-relaxed max-w-xl"
+          >
+            Robots. Websites. AI Apps. Not theory — real projects they build
+            themselves, from scratch. Ages 6–18.
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex flex-col sm:flex-row gap-3"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="flex flex-col sm:flex-row gap-3"
+          >
+            <a
+              href="#courses"
+              className="flex items-center justify-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-6 py-3.5 rounded-full font-semibold transition-all hover:scale-105 text-sm md:text-base"
             >
-              <a
-                href="#courses"
-                className="flex items-center justify-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-6 py-3.5 rounded-full font-semibold transition-all hover:scale-105 text-sm md:text-base"
-              >
-                Explore Courses <ArrowRight size={16} />
-              </a>
-              <a
-                href="#workshop"
-                className="flex items-center justify-center gap-2 border border-[#639922]/40 hover:border-[#639922] text-white px-6 py-3.5 rounded-full font-semibold transition-all hover:bg-[#639922]/10 text-sm md:text-base"
-              >
-                Join Free Workshop
-              </a>
-            </motion.div>
+              Explore Courses <ArrowRight size={16} />
+            </a>
+            <a
+              href="#workshop"
+              className="flex items-center justify-center gap-2 border border-[#639922]/40 hover:border-[#639922] text-white px-6 py-3.5 rounded-full font-semibold transition-all hover:bg-[#639922]/10 text-sm md:text-base"
+            >
+              Join Free Workshop
+            </a>
+          </motion.div>
 
-            {/* Pillar strip */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="flex flex-wrap gap-4 md:gap-6 mt-8 md:mt-12"
-            >
-              {[
-                { icon: <Zap size={14} />, label: "Hands-On", sub: "Build every session" },
-                { icon: <BookOpen size={14} />, label: "3 Tracks", sub: "Robots · Web · AI" },
-                { icon: <Users size={14} />, label: "Age 6–18",  sub: "Structured levels" },
-              ].map((p) => (
-                <div key={p.label} className="flex items-center gap-2">
-                  <span className="text-[#639922]">{p.icon}</span>
-                  <div>
-                    <p className="text-xs font-semibold text-white">{p.label}</p>
-                    <p className="text-xs text-white/40">{p.sub}</p>
-                  </div>
+          {/* Pillar strip */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1 }}
+            className="flex flex-wrap gap-3 md:gap-6 mt-4 md:mt-8"
+          >
+            {[
+              { icon: <Zap size={14} />,      label: "Hands-On", sub: "Build every session" },
+              { icon: <BookOpen size={14} />, label: "3 Tracks",  sub: "Robots · Web · AI" },
+              { icon: <Users size={14} />,    label: "Age 6–18",  sub: "Structured levels" },
+            ].map((p) => (
+              <div key={p.label} className="flex items-center gap-2">
+                <span className="text-[#639922]">{p.icon}</span>
+                <div>
+                  <p className="text-xs font-semibold text-white">{p.label}</p>
+                  <p className="text-xs text-white/40">{p.sub}</p>
                 </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Right: 3D Spline scene — desktop only */}
-          <div className="flex-1 relative hidden md:block">
-            <SplineScene
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
-            />
-          </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Scroll cue */}
+        {/* ── ROBOT (3D Spline) — visible on ALL screens ─── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="flex-1 md:flex-1 relative min-h-0"
+        >
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="w-full h-full"
+          />
+        </motion.div>
+
+        {/* Scroll cue — desktop only */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+          className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-1"
         >
           <span className="text-white/30 text-xs tracking-widest uppercase">scroll</span>
           <div className="w-px h-8 bg-gradient-to-b from-[#639922]/60 to-transparent" />
