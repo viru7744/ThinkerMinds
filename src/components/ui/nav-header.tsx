@@ -21,7 +21,7 @@ function NavHeader({ links }: NavHeaderProps) {
 
   return (
     <ul
-      className="relative mx-auto flex w-fit rounded-full border border-[#639922]/40 bg-black/60 backdrop-blur-md p-1"
+      className="relative mx-auto flex w-fit rounded-full border border-[#639922]/40 bg-black/60 backdrop-blur-md p-1 flex-wrap"
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
     >
       {defaultLinks.map((link) => (

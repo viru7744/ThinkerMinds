@@ -4,7 +4,7 @@ import {
   Cpu, Code2, Smartphone, Rocket, Star, CheckCircle2,
   MessageCircle, Share2, Play, Globe2, ArrowRight,
   Bot, Globe, Monitor, Zap, Users, BookOpen, Terminal,
-  Wifi, Battery, Signal,
+  Wifi, Battery, Signal, Menu, X,
 } from "lucide-react";
 import ShaderBackground from "@/components/ui/shader-background";
 import { Spotlight } from "@/components/ui/spotlight";
@@ -406,8 +406,18 @@ function ProjectShowcaseSection() {
 
 /* ─── Home Page ──────────────────────────────────────────── */
 
+const NAV_LINKS = [
+  { label: "Courses",  href: "#courses"  },
+  { label: "Projects", href: "#projects" },
+  { label: "About",    href: "#about"    },
+  { label: "Pricing",  href: "#pricing"  },
+  { label: "Workshop", href: "#workshop" },
+  { label: "Contact",  href: "#contact"  },
+];
+
 export default function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
@@ -416,25 +426,74 @@ export default function Home() {
       <ShaderBackground />
 
       {/* ── NAVBAR ───────────────────────────────────────── */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4">
-        <a href="#home" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-lg bg-[#639922] flex items-center justify-center">
-            <Cpu size={20} className="text-white" />
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 bg-black/80 backdrop-blur-md border-b border-[#639922]/10">
+          {/* Logo */}
+          <a href="#home" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+            <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-[#639922] flex items-center justify-center">
+              <Cpu size={18} className="text-white" />
+            </div>
+            <span className="font-bold text-lg md:text-xl tracking-tight text-white">
+              Tinker<span className="text-[#639922]">Minds</span>
+            </span>
+          </a>
+
+          {/* Desktop nav */}
+          <div className="hidden md:block">
+            <NavHeader />
           </div>
-          <span className="font-bold text-xl tracking-tight text-white">
-            Tinker<span className="text-[#639922]">Minds</span>
-          </span>
-        </a>
 
-        <NavHeader />
+          {/* Desktop enroll + Mobile hamburger */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://wa.me/91XXXXXXXXXX"
+              className="hidden md:flex items-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all"
+            >
+              <MessageCircle size={16} />
+              Enroll Now
+            </a>
+            <button
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-[#639922]/30 text-white hover:border-[#639922] transition-colors"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
 
-        <a
-          href="https://wa.me/91XXXXXXXXXX"
-          className="hidden md:flex items-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all"
-        >
-          <MessageCircle size={16} />
-          Enroll Now
-        </a>
+        {/* Mobile dropdown menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.nav
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="md:hidden overflow-hidden bg-black/95 backdrop-blur-xl border-b border-[#639922]/20"
+            >
+              <div className="flex flex-col px-4 py-4 gap-1">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-white/80 hover:text-[#639922] hover:bg-[#639922]/10 px-4 py-3 rounded-xl text-sm font-medium transition-all"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <a
+                  href="https://wa.me/91XXXXXXXXXX"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 mt-2 bg-[#639922] text-white px-4 py-3 rounded-xl text-sm font-bold"
+                >
+                  <MessageCircle size={16} /> Enroll Now
+                </a>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* ── HERO ─────────────────────────────────────────── */}
@@ -446,14 +505,14 @@ export default function Home() {
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#639922" />
 
         <div className="flex h-full w-full">
-          {/* Left: text */}
-          <div className="flex-1 p-8 md:p-16 relative z-10 flex flex-col justify-center max-w-2xl">
+          {/* Left: text — full width on mobile, half on desktop */}
+          <div className="w-full md:flex-1 px-5 pt-24 pb-10 md:px-16 md:pt-0 md:pb-0 relative z-10 flex flex-col justify-center md:max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <span className="inline-block bg-[#639922]/20 border border-[#639922]/40 text-[#C0DD97] text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6">
+              <span className="inline-block bg-[#639922]/20 border border-[#639922]/40 text-[#C0DD97] text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-5">
                 Where kids become creators
               </span>
             </motion.div>
@@ -462,7 +521,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-5xl md:text-7xl font-black leading-none tracking-tight text-white mb-6"
+              className="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.05] tracking-tight text-white mb-5"
             >
               Kids Build{" "}
               <span className="text-[#639922]">Real</span>{" "}
@@ -473,7 +532,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5 }}
-              className="text-lg text-white/60 mb-10 leading-relaxed max-w-xl"
+              className="text-base md:text-lg text-white/60 mb-8 leading-relaxed max-w-xl"
             >
               Robots. Websites. AI Apps. Not theory — real projects they build
               themselves, from scratch. Ages 6–18.
@@ -483,17 +542,17 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-col sm:flex-row gap-3"
             >
               <a
                 href="#courses"
-                className="flex items-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-6 py-3 rounded-full font-semibold transition-all hover:scale-105"
+                className="flex items-center justify-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-6 py-3.5 rounded-full font-semibold transition-all hover:scale-105 text-sm md:text-base"
               >
-                Explore Courses <ArrowRight size={18} />
+                Explore Courses <ArrowRight size={16} />
               </a>
               <a
                 href="#workshop"
-                className="flex items-center gap-2 border border-[#639922]/40 hover:border-[#639922] text-white px-6 py-3 rounded-full font-semibold transition-all hover:bg-[#639922]/10"
+                className="flex items-center justify-center gap-2 border border-[#639922]/40 hover:border-[#639922] text-white px-6 py-3.5 rounded-full font-semibold transition-all hover:bg-[#639922]/10 text-sm md:text-base"
               >
                 Join Free Workshop
               </a>
@@ -504,12 +563,12 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 1 }}
-              className="flex gap-6 mt-12"
+              className="flex flex-wrap gap-4 md:gap-6 mt-8 md:mt-12"
             >
               {[
-                { icon: <Zap size={16} />, label: "Hands-On", sub: "Build every session" },
-                { icon: <BookOpen size={16} />, label: "3 Tracks",  sub: "Robots · Web · AI" },
-                { icon: <Users size={16} />, label: "Age 6–18",  sub: "Structured levels" },
+                { icon: <Zap size={14} />, label: "Hands-On", sub: "Build every session" },
+                { icon: <BookOpen size={14} />, label: "3 Tracks", sub: "Robots · Web · AI" },
+                { icon: <Users size={14} />, label: "Age 6–18",  sub: "Structured levels" },
               ].map((p) => (
                 <div key={p.label} className="flex items-center gap-2">
                   <span className="text-[#639922]">{p.icon}</span>
@@ -522,7 +581,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Right: 3D Spline scene */}
+          {/* Right: 3D Spline scene — desktop only */}
           <div className="flex-1 relative hidden md:block">
             <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
@@ -564,14 +623,14 @@ export default function Home() {
 
       {/* ── PROBLEM STATEMENT ────────────────────────────── */}
       <FadeInSection>
-        <section className="max-w-5xl mx-auto px-6 py-24 text-center">
+        <section className="max-w-5xl mx-auto px-4 md:px-6 py-14 md:py-24 text-center">
           <span className="text-[#639922] uppercase tracking-widest text-sm font-semibold">The Problem</span>
-          <h2 className="text-4xl md:text-5xl font-black text-white mt-3 mb-12 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-black text-white mt-3 mb-8 md:mb-12 leading-tight">
             Most coding classes teach syntax.
             <br />
             <span className="text-[#639922]">We teach creation.</span>
           </h2>
-          <div className="grid md:grid-cols-2 gap-6 text-left">
+          <div className="grid sm:grid-cols-2 gap-4 text-left">
             {[
               { ok: false, text: "Old institutes → boring theory, no real projects" },
               { ok: false, text: "Kids memorize code → don't understand it" },
@@ -661,12 +720,12 @@ export default function Home() {
 
       {/* ── WHAT KIDS BUILD ──────────────────────────────── */}
       <FadeInSection>
-        <section className="py-24 px-6 max-w-6xl mx-auto">
-          <div className="text-center mb-14">
+        <section className="py-14 md:py-24 px-4 md:px-6 max-w-6xl mx-auto">
+          <div className="text-center mb-10 md:mb-14">
             <span className="text-[#639922] uppercase tracking-widest text-sm font-semibold">Projects</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mt-3">Real Projects. Real Pride.</h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mt-3">Real Projects. Real Pride.</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {[
               { icon: <Bot size={28} />,    label: "Smart Light System (LDR + Arduino)" },
               { icon: <Bot size={28} />,    label: "Obstacle Avoiding Robot" },
@@ -681,7 +740,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.03, borderColor: "rgba(99,153,34,0.6)" }}
-                className="flex flex-col items-center gap-3 p-6 rounded-xl border border-[#639922]/20 bg-black/40 text-center cursor-default transition-colors"
+                className="flex flex-col items-center gap-2 md:gap-3 p-4 md:p-6 rounded-xl border border-[#639922]/20 bg-black/40 text-center cursor-default transition-colors"
               >
                 <span className="text-[#639922]">{p.icon}</span>
                 <p className="text-sm text-white/70 font-medium leading-snug">{p.label}</p>
@@ -711,12 +770,12 @@ export default function Home() {
 
       {/* ── TESTIMONIALS ─────────────────────────────────── */}
       <FadeInSection>
-        <section className="py-24 px-6 max-w-5xl mx-auto">
-          <div className="text-center mb-14">
+        <section className="py-14 md:py-24 px-4 md:px-6 max-w-5xl mx-auto">
+          <div className="text-center mb-10 md:mb-14">
             <span className="text-[#639922] uppercase tracking-widest text-sm font-semibold">Testimonials</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mt-3">What Parents & Students Say</h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mt-3">What Parents & Students Say</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {[
               { quote: "My son built a robot in his first month. He won't stop talking about it.", by: "Parent", age: "Son, Age 10" },
               { quote: "I built my own app and installed it on my phone!",                          by: "Student", age: "Age 12" },
@@ -740,24 +799,24 @@ export default function Home() {
       {/* ── FREE WORKSHOP CTA ────────────────────────────── */}
       <FadeInSection>
         <section id="workshop" className="py-20 px-6">
-          <div className="max-w-3xl mx-auto text-center rounded-3xl border border-[#639922]/30 bg-gradient-to-b from-[#0d1a07] to-black p-12">
-            <span className="inline-block bg-[#EF9F27]/20 border border-[#EF9F27]/40 text-[#EF9F27] text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-6">
+          <div className="max-w-3xl mx-auto text-center rounded-3xl border border-[#639922]/30 bg-gradient-to-b from-[#0d1a07] to-black px-5 py-10 md:p-12">
+            <span className="inline-block bg-[#EF9F27]/20 border border-[#EF9F27]/40 text-[#EF9F27] text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-5">
               Free Workshop
             </span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">
               Start with a Free Workshop
             </h2>
-            <p className="text-white/60 text-lg mb-8">
+            <p className="text-white/60 text-base md:text-lg mb-8">
               1-hour live session — Robotics demo + Coding intro + AI demo.
-              <br />
+              <br className="hidden sm:block" />
               No experience needed. Just curiosity.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="https://wa.me/91XXXXXXXXXX"
-                className="flex items-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105"
+                className="flex items-center justify-center gap-2 bg-[#639922] hover:bg-[#27500A] text-white px-6 py-4 rounded-full font-bold text-base md:text-lg transition-all hover:scale-105"
               >
-                <MessageCircle size={20} /> Register for Free Workshop
+                <MessageCircle size={18} /> Register for Free Workshop
               </a>
             </div>
             <p className="text-white/30 text-sm mt-6">FREE · Seats limited · First come first served</p>
@@ -767,14 +826,14 @@ export default function Home() {
 
       {/* ── CONTACT ──────────────────────────────────────── */}
       <FadeInSection>
-        <section id="contact" className="py-24 px-6 bg-black/40">
+        <section id="contact" className="py-14 md:py-24 px-4 md:px-6 bg-black/40">
           <div className="max-w-4xl mx-auto text-center">
             <span className="text-[#639922] uppercase tracking-widest text-sm font-semibold">Contact</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mt-3 mb-4">
+            <h2 className="text-3xl md:text-5xl font-black text-white mt-3 mb-4">
               Come Say Hello.
             </h2>
-            <p className="text-white/50 mb-12">Or build something together.</p>
-            <div className="grid md:grid-cols-3 gap-6 text-center mb-10">
+            <p className="text-white/50 mb-8 md:mb-12">Or build something together.</p>
+            <div className="grid sm:grid-cols-3 gap-4 text-center mb-10">
               {[
                 { icon: <MessageCircle size={24} />, label: "WhatsApp", value: "+91 XXXXXXXXXX", href: "https://wa.me/91XXXXXXXXXX" },
                 { icon: <Globe size={24} />,          label: "Email",    value: "hello@tinkermindsindia.com", href: "mailto:hello@tinkermindsindia.com" },
@@ -796,8 +855,8 @@ export default function Home() {
       </FadeInSection>
 
       {/* ── FOOTER ───────────────────────────────────────── */}
-      <footer className="border-t border-[#639922]/20 py-12 px-6 bg-black">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <footer className="border-t border-[#639922]/20 py-10 md:py-12 px-4 md:px-6 bg-black">
+        <div className="max-w-6xl mx-auto flex flex-col items-center md:flex-row md:justify-between gap-6 md:gap-8 text-center md:text-left">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-[#639922] flex items-center justify-center">
               <Cpu size={16} className="text-white" />
@@ -808,7 +867,7 @@ export default function Home() {
             </div>
           </div>
 
-          <nav className="flex flex-wrap gap-6 text-sm text-white/50">
+          <nav className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6 text-sm text-white/50">
             {["Courses", "Workshop", "About", "Contact", "Pricing"].map((l) => (
               <a key={l} href={`#${l.toLowerCase()}`} className="hover:text-[#639922] transition-colors">
                 {l}

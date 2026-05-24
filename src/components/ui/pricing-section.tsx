@@ -133,7 +133,7 @@ export default function PricingSection() {
 
   return (
     <div
-      className="px-4 pt-20 pb-20 min-h-screen mx-auto relative bg-[#0a0a0a]"
+      className="px-4 pt-14 md:pt-20 pb-14 md:pb-20 min-h-screen mx-auto relative bg-[#0a0a0a]"
       ref={pricingRef}
       id="pricing"
     >
@@ -161,7 +161,7 @@ export default function PricingSection() {
           animationNum={1}
           timelineRef={pricingRef}
           customVariants={revealVariants}
-          className="md:text-5xl sm:text-4xl text-3xl font-bold text-white mb-4"
+          className="md:text-5xl sm:text-4xl text-2xl font-bold text-white mb-4"
         >
           Invest in Your Child&apos;s{" "}
           <TimelineContent
@@ -195,7 +195,7 @@ export default function PricingSection() {
         <PricingSwitch onSwitch={togglePricingPeriod} />
       </TimelineContent>
 
-      <div className="grid md:grid-cols-3 max-w-6xl gap-6 py-8 mx-auto relative z-10">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 max-w-6xl gap-4 md:gap-6 py-6 md:py-8 mx-auto relative z-10">
         {plans.map((plan, index) => (
           <TimelineContent
             key={plan.name}

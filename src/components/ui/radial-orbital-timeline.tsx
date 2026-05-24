@@ -29,9 +29,23 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
   const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
   const [centerOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
+  const [orbitRadius, setOrbitRadius] = useState<number>(200);
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    const updateRadius = () => {
+      const w = window.innerWidth;
+      if (w < 400) setOrbitRadius(110);
+      else if (w < 640) setOrbitRadius(140);
+      else if (w < 768) setOrbitRadius(160);
+      else setOrbitRadius(200);
+    };
+    updateRadius();
+    window.addEventListener("resize", updateRadius);
+    return () => window.removeEventListener("resize", updateRadius);
+  }, []);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
@@ -87,10 +101,9 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
 
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 200;
     const radian = (angle * Math.PI) / 180;
-    const x = radius * Math.cos(radian) + centerOffset.x;
-    const y = radius * Math.sin(radian) + centerOffset.y;
+    const x = orbitRadius * Math.cos(radian) + centerOffset.x;
+    const y = orbitRadius * Math.sin(radian) + centerOffset.y;
     const zIndex = Math.round(100 + 50 * Math.cos(radian));
     const opacity = Math.max(0.4, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2)));
     return { x, y, angle, zIndex, opacity };
@@ -117,7 +130,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
 
   return (
     <div
-      className="w-full h-[600px] flex flex-col items-center justify-center bg-black overflow-hidden"
+      className="w-full h-[420px] sm:h-[520px] md:h-[600px] flex flex-col items-center justify-center bg-black overflow-hidden"
       ref={containerRef}
       onClick={handleContainerClick}
     >
@@ -134,8 +147,11 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
             <div className="w-8 h-8 rounded-full bg-[#C0DD97]/80 backdrop-blur-md" />
           </div>
 
-          {/* Orbit ring */}
-          <div className="absolute w-96 h-96 rounded-full border border-[#639922]/20" />
+          {/* Orbit ring — sized to match dynamic radius */}
+          <div
+            className="absolute rounded-full border border-[#639922]/20"
+            style={{ width: orbitRadius * 2, height: orbitRadius * 2 }}
+          />
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -188,7 +204,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
 
                 {/* Expanded card */}
                 {isExpanded && (
-                  <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-64 bg-black/95 backdrop-blur-lg border-[#639922]/40 shadow-xl shadow-[#639922]/10 overflow-visible">
+                  <Card className="absolute top-14 left-1/2 -translate-x-1/2 w-48 sm:w-56 md:w-64 bg-black/95 backdrop-blur-lg border-[#639922]/40 shadow-xl shadow-[#639922]/10 overflow-visible">
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-[#639922]/50" />
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-center">
