@@ -3,14 +3,26 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 
 class Vector2D {
-  constructor(public x: number, public y: number) {}
+  x: number
+  y: number
+  constructor(x: number, y: number) {
+    this.x = x
+    this.y = y
+  }
   static random(min: number, max: number): number {
     return min + Math.random() * (max - min)
   }
 }
 
 class Vector3D {
-  constructor(public x: number, public y: number, public z: number) {}
+  x: number
+  y: number
+  z: number
+  constructor(x: number, y: number, z: number) {
+    this.x = x
+    this.y = y
+    this.z = z
+  }
   static random(min: number, max: number): number {
     return min + Math.random() * (max - min)
   }
