@@ -12,6 +12,7 @@ import { SplineScene } from "@/components/ui/splite";
 import NavHeader from "@/components/ui/nav-header";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import PricingSection from "@/components/ui/pricing-section";
+import { SpiralAnimation } from "@/components/ui/spiral-animation";
 
 /* ─── Timeline Data ─────────────────────────────────────── */
 
@@ -502,6 +503,32 @@ export default function Home() {
         ref={heroRef}
         className="relative w-full h-screen flex flex-col md:flex-row overflow-hidden"
       >
+        {/* ── SPIRAL ANIMATION BACKGROUND ─────────────────── */}
+        <div className="absolute inset-0 z-0">
+          <SpiralAnimation />
+        </div>
+
+        {/* Left-side gradient so text stays readable over the stars */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.18) 65%, transparent 100%)",
+          }}
+        />
+
+        {/* Subtle brand-green radial at top — tints the star field green */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 50% at 50% -5%, rgba(99,153,34,0.22) 0%, transparent 70%)",
+          }}
+        />
+
+        {/* Bottom fade into the next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-36 z-[1] pointer-events-none bg-gradient-to-t from-black to-transparent" />
+
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="#639922" />
 
         {/* ── TEXT COLUMN ──────────────────────────────────── */}
@@ -585,7 +612,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="flex-1 md:flex-1 relative min-h-0"
+          className="flex-1 md:flex-1 relative min-h-0 z-10"
         >
           <SplineScene
             scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
