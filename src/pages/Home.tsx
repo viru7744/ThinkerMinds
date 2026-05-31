@@ -13,6 +13,7 @@ import NavHeader from "@/components/ui/nav-header";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import PricingSection from "@/components/ui/pricing-section";
 import { SpiralAnimation } from "@/components/ui/spiral-animation";
+import MentorsSection from "@/components/ui/mentors-section";
 
 /* ─── Timeline Data ─────────────────────────────────────── */
 
@@ -825,6 +826,9 @@ export default function Home() {
           </div>
         </section>
       </FadeInSection>
+
+      {/* ── MENTORS ──────────────────────────────────────── */}
+      <MentorsSection />
 
       {/* ── FREE WORKSHOP CTA ────────────────────────────── */}
       <FadeInSection>
